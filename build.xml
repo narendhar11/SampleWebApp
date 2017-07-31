@@ -6,21 +6,25 @@
             <include name="*.jar"/>
         </fileset>
     </path>
+    <!-- creating directroy for java class file -->
     <target name="init">
         <mkdir dir="build/classes"/>
         <mkdir dir="dist"/>
     </target>
+    <!-- Moving compiled file class files to classes folder-->
     <target name="compile" depends="init">
         <javac srcdir="src" debug="true" destdir="build/classes" includeantruntime="false">
             <classpath refid="compile.classpath"/>
         </javac>
     </target>
+
     <target name="checkstyle">
         <checkstyle config="sun_checks.xml" failOnViolation="false">
             <fileset dir="src/example" includes="**/*.java"/>
             <formatter type="xml" toFile="checkstyle_errors.xml"/>
         </checkstyle>
     </target>
+    <!-- Junit Test target -->
     <target name="junit" depends="compile">
         <junit printsummary="yes" haltonfailure="yes">
             <classpath>
@@ -34,6 +38,7 @@
             </test>
         </junit>
     </target>
+    <!-- Getting local environment -->
     <target name="war" depends="compile">
         <war destfile="dest/SampleWebApp.war" webxml="WebContent/WEB-INF/web.xml">
             <fileset dir="WebContent"/>
